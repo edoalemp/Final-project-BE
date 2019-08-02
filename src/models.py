@@ -8,7 +8,7 @@ class Organization(db.Model):
     address = db.Column(db.String(80), unique=True, nullable=False)
     phone = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    persons = db.relationship('Address', backref='person')
+    persons = db.relationship('Address')
 
     def __repr__(self):
         return '<Organization %r>' % self.name
@@ -23,7 +23,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'),
+    organization = db.Column(db.Integer, db.ForeignKey('organization.id'),
         nullable=False)
 
     def __repr__(self):
