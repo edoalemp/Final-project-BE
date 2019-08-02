@@ -34,3 +34,20 @@ class Person(db.Model):
             "username": self.username,
             "email": self.email
         }
+
+class Station(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    lattitude = db.Column(db.String(80), unique=True, nullable=False)
+    longitude = db.Column(db.String(80), unique=True, nullable=False)
+    responsibleUser = db.Column(db.String(80), unique=False, nullable=False)
+    description = db.Column(db.String(120), unique=True, nullable=True)
+    organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Station %r>' % self.name
+
+    def serialize(self):
+        return {
+            "name": self.name
+        }
