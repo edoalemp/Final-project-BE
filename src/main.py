@@ -144,7 +144,7 @@ def handle_station():
 
 
 @app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE'])
-def get_single_person(station_id):
+def get_single_station(station_id):
     """
     edita una estación (PUT) y borra una estacion (DELETE)
     """
@@ -155,7 +155,7 @@ def get_single_person(station_id):
         if body is None:
             raise APIException("You need to specify the request body as a json object", status_code=400)
 
-        station1 = Person.query.get(station_id)
+        station1 = Station.query.get(station_id)
         if station1 is None:
             raise APIException('Station not found', status_code=404)
 

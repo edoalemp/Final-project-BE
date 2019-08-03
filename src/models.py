@@ -56,6 +56,7 @@ class Station(db.Model):
 
     def serialize(self):
         return {
+            "id": self.station,
             "name": self.name,
             "lattitude": self.lattitude,
             "longitude": self.longitude,
