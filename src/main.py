@@ -25,10 +25,38 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+@app.route('/organizations', methods=['POST'])
+def handle_organization():
+    """
+    agrega una organizacion (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        body = request.get_json()
+
+        if body is None:
+            raise APIException("You need to specify the request body as a json object", status_code=400)
+        if 'name' not in body:
+            raise APIException('You need to specify the name', status_code=400)
+        if 'address' not in body:
+            raise APIException('You need to specify the address', status_code=400)
+        if 'phone' not in body:
+            raise APIException('You need to specify the phone', status_code=400)
+        if 'email' not in body:
+            raise APIException('You need to specify the email', status_code=400)
+
+        organization1 = Organization(name=body['name'], address=body['address'], phone=body['phone'], email=body['email'])
+        db.session.add(organization1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
 @app.route('/stations', methods=['POST', 'GET'])
 def handle_person():
     """
-    Trae lista de estaciones (GET) y agrega una estación (PUT)
+    Trae lista de estaciones (GET) y agrega una estación (POST)
     """
 
     # POST request
