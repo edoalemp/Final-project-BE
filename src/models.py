@@ -61,7 +61,7 @@ class Station(db.Model):
             "longitude": self.longitude,
             "responsible": self.responsible,
             "description": self.description,
-            "organization": self.orgganization
+            "organization": self.organization
         }
 
 class Measure(db.Model):
