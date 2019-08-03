@@ -38,10 +38,10 @@ class Person(db.Model):
 class Station(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    lattitude = db.Column(db.String(80), unique=True, nullable=False)
-    longitude = db.Column(db.String(80), unique=True, nullable=False)
+    lattitude = db.Column(db.String(40), unique=True, nullable=False)
+    longitude = db.Column(db.String(40), unique=True, nullable=False)
     responsibleuser = db.Column(db.String(80), unique=False, nullable=False)
-    description = db.Column(db.String(120), unique=False, nullable=True)
+    description = db.Column(db.String(250), unique=False, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     assignedMeasures = db.relationship('Assignedmeasure')
 
@@ -82,8 +82,8 @@ class Assignedmeasure(db.Model):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String(80), unique=True, nullable=False)
-    timestamp = db.Column(db.String(80), unique=True, nullable=False)
+    value = db.Column(db.String(15), unique=True, nullable=False)
+    timestamp = db.Column(db.String(25), unique=True, nullable=False)
     assignedmeasure = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
 
     def __repr__(self):
@@ -91,5 +91,6 @@ class Data(db.Model):
 
     def serialize(self):
         return {
-            "value": self.value
+            "value": self.value,
+            "timestamp": self.timestamp
         }
