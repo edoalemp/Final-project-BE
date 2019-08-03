@@ -73,10 +73,10 @@ class AssignedMeasure(db.Model):
     data = db.relationship('Data')
 
     def __repr__(self):
-        return '<AssignedMeasure %r>' % self.measures
+        return '<AssignedMeasure %r>' % self.measure
 
     def serialize(self):
         return {
-            "measures": self.measures
+            "measure": self.measure
         }
 
