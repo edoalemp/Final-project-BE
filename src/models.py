@@ -85,6 +85,7 @@ class Data(db.Model):
     value = db.Column(db.String(80), unique=True, nullable=False)
     timestamp = db.Column(db.String(80), unique=True, nullable=False)
 
+
     def __repr__(self):
         return '<Data %r>' % self.value
 
