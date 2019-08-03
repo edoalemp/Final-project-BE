@@ -252,7 +252,49 @@ def get_single_measure(measure_id):
     return "Invalid Method", 404
 
 
+####   Mediciones Asignadas a estación   ####
 
+
+@app.route('/assignedmeasures', methods=['POST'])
+def handle_assignmeasure():
+    """
+    Agrega una medicion a estación (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        body = request.get_json()
+
+        if body is None:
+            raise APIException("You need to specify the request body as a json object", status_code=400)
+        if 'station_id' not in body:
+            raise APIException('You need to specify the station_id', status_code=400)
+        if 'measure_id' not in body:
+            raise APIException('You need to specify the measure_id', status_code=400)
+
+        assignedmeasure1 = Assignedmeasure(station_id=body['station_id'], measure_id=body['measure_id'])
+        db.session.add(assignedmeasure1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
+@app.route('/measures/<int:assignedmeasure_id>', methods=['DELETE'])
+def get_single_Assignedmeasure(assignedmeasure_id):
+    """
+    Borra una medición asignada a estación (DELETE)
+    """
+
+    # DELETE request
+    if request.method == 'DELETE':
+        assignedmeasure1 = Assignedmeasure.query.get(assignedmeasure_id)
+        if assignedmeasure1 is None:
+            raise APIException('Measure not found', status_code=404)
+        db.session.delete(assignedmeasure1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
