@@ -25,6 +25,10 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+
+####   Organizaciones   ####
+
+
 @app.route('/organizations', methods=['POST', 'GET'])
 def handle_organization():
     """
@@ -60,7 +64,7 @@ def handle_organization():
     return "Invalid Method", 404
 
 
-
+####   Personas   ####
 
 
 @app.route('/persons', methods=['POST', 'GET'])
@@ -96,9 +100,7 @@ def handle_person():
     return "Invalid Method", 404
 
 
-
-
-
+####   Estaciones    ####
 
 
 @app.route('/stations', methods=['POST', 'GET'])
@@ -124,7 +126,6 @@ def handle_station():
         if 'organization' not in body:
             raise APIException('You need to specify the organization', status_code=400)
 
-
         station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], responsible=body['responsible'], organization=body['organization'])
         db.session.add(station1)
         db.session.commit()
@@ -137,11 +138,6 @@ def handle_station():
         return jsonify(all_stations), 200
 
     return "Invalid Method", 404
-
-
-
-
-
 
 @app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE'])
 def get_single_station(station_id):
