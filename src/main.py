@@ -25,7 +25,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/organizations', methods=['POST'])
+@app.route('/organizations', methods=['POST', 'GET'])
 def handle_organization():
     """
     agrega una organizacion (POST)
@@ -50,6 +50,12 @@ def handle_organization():
         db.session.add(organization1)
         db.session.commit()
         return "ok", 200
+
+        # GET request
+    if request.method == 'GET':
+        all_organization = Organization.query.all()
+        all_organization = list(map(lambda x: x.serialize(), all_organization))
+        return jsonify(all_organization), 200
 
     return "Invalid Method", 404
 
