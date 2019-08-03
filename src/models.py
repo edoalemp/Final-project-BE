@@ -41,7 +41,7 @@ class Station(db.Model):
     lattitude = db.Column(db.String(80), unique=True, nullable=False)
     longitude = db.Column(db.String(80), unique=True, nullable=False)
     responsibleUser = db.Column(db.String(80), unique=False, nullable=False)
-    description = db.Column(db.String(120), unique=True, nullable=True)
+    description = db.Column(db.String(120), unique=False, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     assignedMeasure = db.relationship('AssignedMeasure')
 
@@ -68,12 +68,13 @@ class Measure(db.Model):
 
 class AssignedMeasure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    stations = db.Column(db.Integer, db.ForeignKey('station.id'),
-        nullable=False)
+    measures = db.Column(db.Integer, db.ForeignKey('measure.id'), nullable=False)
+    stations = db.Column(db.Integer, db.ForeignKey('station.id'), nullable=False)
+
     def __repr__(self):
-        return '<Measure %r>' % self.name
+        return '<AssignedMeasure %r>' % self.measures
 
     def serialize(self):
         return {
-            "name": self.name
+            "measures": self.measures
         }
