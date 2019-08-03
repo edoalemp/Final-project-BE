@@ -8,7 +8,7 @@ class Organization(db.Model):
     address = db.Column(db.String(80), unique=True, nullable=False)
     phone = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    persons = db.relationship('Address')
+    persons = db.relationship('Person')
 
     def __repr__(self):
         return '<Organization %r>' % self.name
