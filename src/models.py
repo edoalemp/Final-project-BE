@@ -27,7 +27,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     stations = db.relationship('Station')
 
     def __repr__(self):
@@ -38,7 +38,7 @@ class Person(db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "organization": self.organization
+            "organization": self.organization_id
         }
 
 class Station(db.Model):

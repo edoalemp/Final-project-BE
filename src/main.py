@@ -83,10 +83,10 @@ def handle_person():
             raise APIException('You need to specify the username', status_code=400)
         if 'email' not in body:
             raise APIException('You need to specify the email', status_code=400)
-        if 'organization' not in body:
+        if 'organization_id' not in body:
             raise APIException('You need to specify the organization', status_code=400)
 
-        person1 = Person(username=body['username'], email=body['email'], organization=body['organization'])
+        person1 = Person(username=body['username'], email=body['email'], organization_id=body['organization_id'])
         db.session.add(person1)
         db.session.commit()
         return "ok", 200
