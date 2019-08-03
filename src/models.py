@@ -56,7 +56,12 @@ class Station(db.Model):
 
     def serialize(self):
         return {
-            "name": self.name
+            "name": self.name,
+            "lattitude": self.lattitude,
+            "longitude": self.longitude,
+            "responsible": self.responsible,
+            "description": self.description,
+            "organization": self.orgganization
         }
 
 class Measure(db.Model):

@@ -59,6 +59,10 @@ def handle_organization():
 
     return "Invalid Method", 404
 
+
+
+
+
 @app.route('/persons', methods=['POST', 'GET'])
 def handle_person():
     """
@@ -90,6 +94,11 @@ def handle_person():
         return jsonify(all_people), 200
 
     return "Invalid Method", 404
+
+
+
+
+
 
 
 @app.route('/stations', methods=['POST', 'GET'])
@@ -129,6 +138,10 @@ def handle_station():
         return jsonify(all_stations), 200
 
     return "Invalid Method", 404
+
+
+
+
 
 
 @app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE'])
