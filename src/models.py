@@ -80,3 +80,15 @@ class AssignedMeasure(db.Model):
             "measure": self.measure
         }
 
+class Data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.String(80), unique=True, nullable=False)
+    timestamp = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<Data %r>' % self.value
+
+    def serialize(self):
+        return {
+            "value": self.value
+        }
