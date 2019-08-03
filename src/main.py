@@ -182,6 +182,77 @@ def get_single_station(station_id):
 
     return "Invalid Method", 404
 
+####   Mediciones    ####
+
+
+@app.route('/measures', methods=['POST', 'GET'])
+def handle_measure():
+    """
+    Trae lista de mediciones (GET) y agrega una medicion (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        body = request.get_json()
+
+        if body is None:
+            raise APIException("You need to specify the request body as a json object", status_code=400)
+        if 'name' not in body:
+            raise APIException('You need to specify the name', status_code=400)
+        if 'unit' not in body:
+            raise APIException('You need to specify the unit', status_code=400)
+
+        measure1 = Measure(name=body['name'], unit=body['unit'])
+        db.session.add(measure1)
+        db.session.commit()
+        return "ok", 200
+
+    # GET request
+    if request.method == 'GET':
+        all_measures = Measure.query.all()
+        all_measures = list(map(lambda x: x.serialize(), all_measures))
+        return jsonify(all_measures), 200
+
+    return "Invalid Method", 404
+
+@app.route('/measures/<int:measure_id>', methods=['PUT', 'DELETE'])
+def get_single_measure(measure_id):
+    """
+    edita una medición (PUT) y borra una medición (DELETE)
+    """
+
+    # PUT request
+    if request.method == 'PUT':
+        body = request.get_json()
+        if body is None:
+            raise APIException("You need to specify the request body as a json object", status_code=400)
+
+        measure1 = Measure.query.get(measure_id)
+        if measure1 is None:
+            raise APIException('Measure not found', status_code=404)
+
+        if "name" in body:
+            measure1.name = body["name"]
+        if "unit" in body:
+            measure1.unit = body["unit"]
+
+        db.session.commit()
+
+        return jsonify(measure1.serialize()), 200
+
+    # DELETE request
+    if request.method == 'DELETE':
+        measure1 = Measure.query.get(measure_id)
+        if measure1 is None:
+            raise APIException('Measure not found', status_code=404)
+        db.session.delete(measure1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
+
+
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

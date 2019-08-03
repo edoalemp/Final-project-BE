@@ -75,7 +75,8 @@ class Measure(db.Model):
 
     def serialize(self):
         return {
-            "name": self.name
+            "name": self.name,
+            "unit": self.unit
         }
 
 class Assignedmeasure(db.Model):
