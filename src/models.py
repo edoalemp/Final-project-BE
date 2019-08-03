@@ -27,8 +27,8 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    organization = db.Column(db.Integer, db.ForeignKey('organization.id'),
-        nullable=False)
+    organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+    stations = db.relationship('Station')
 
     def __repr__(self):
         return '<Person %r>' % self.username
@@ -46,7 +46,7 @@ class Station(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     lattitude = db.Column(db.String(40), unique=True, nullable=False)
     longitude = db.Column(db.String(40), unique=True, nullable=False)
-    responsibleuser = db.Column(db.String(80), unique=False, nullable=False)
+    responsible = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     assignedMeasures = db.relationship('Assignedmeasure')
