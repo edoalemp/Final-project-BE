@@ -123,10 +123,9 @@ def handle_station():
             raise APIException('You need to specify the responsible', status_code=400)
         if 'orzanization' not in body:
             raise APIException('You need to specify the orzanization', status_code=400)
-        if 'assignedMeasure' not in body:
-            raise APIException('You need to specify the assignedMeasure', status_code=400)
 
-        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], responsible=body['responsible'], organization=body['organization'], assignedMeasure=body['assignedmeasure'])
+
+        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], responsible=body['responsible'], organization=body['organization'])
         db.session.add(station1)
         db.session.commit()
         return "ok", 200
