@@ -43,7 +43,7 @@ class Station(db.Model):
     responsibleuser = db.Column(db.String(80), unique=False, nullable=False)
     description = db.Column(db.String(120), unique=False, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
-    assignedMeasure = db.relationship('AssignedMeasure')
+    assignedMeasure = db.relationship('Assignedmeasure')
 
     def __repr__(self):
         return '<Station %r>' % self.name
