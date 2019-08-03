@@ -40,7 +40,7 @@ class Station(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     lattitude = db.Column(db.String(80), unique=True, nullable=False)
     longitude = db.Column(db.String(80), unique=True, nullable=False)
-    responsibleUser = db.Column(db.String(80), unique=False, nullable=False)
+    responsibleuser = db.Column(db.String(80), unique=False, nullable=False)
     description = db.Column(db.String(120), unique=False, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     assignedMeasure = db.relationship('AssignedMeasure')
