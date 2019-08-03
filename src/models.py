@@ -15,8 +15,12 @@ class Organization(db.Model):
 
     def serialize(self):
         return {
+            "id":self.id,
             "name": self.name,
+            "address": self.address,
+            "phone": self.phone,
             "email": self.email
+
         }
 
 class Person(db.Model):
@@ -31,8 +35,10 @@ class Person(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "organization": self.organization
         }
 
 class Station(db.Model):

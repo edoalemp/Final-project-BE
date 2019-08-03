@@ -28,7 +28,7 @@ def sitemap():
 @app.route('/organizations', methods=['POST', 'GET'])
 def handle_organization():
     """
-    agrega una organizacion (POST)
+    agrega una organizacion (POST), trae lista de organizaciones
     """
 
     # POST request
@@ -59,8 +59,41 @@ def handle_organization():
 
     return "Invalid Method", 404
 
-@app.route('/stations', methods=['POST', 'GET'])
+@app.route('/persons', methods=['POST', 'GET'])
 def handle_person():
+    """
+    agrega una persona (POST), trae una lista de personas (GET)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        body = request.get_json()
+
+        if body is None:
+            raise APIException("You need to specify the request body as a json object", status_code=400)
+        if 'username' not in body:
+            raise APIException('You need to specify the username', status_code=400)
+        if 'email' not in body:
+            raise APIException('You need to specify the email', status_code=400)
+        if 'organization' not in body:
+            raise APIException('You need to specify the organization', status_code=400)
+
+        person1 = Person(username=body['username'], email=body['email'], organization=body['organization'])
+        db.session.add(person1)
+        db.session.commit()
+        return "ok", 200
+
+        # GET request
+    if request.method == 'GET':
+        all_people = Person.query.all()
+        all_people = list(map(lambda x: x.serialize(), all_people))
+        return jsonify(all_people), 200
+
+    return "Invalid Method", 404
+
+
+@app.route('/stations', methods=['POST', 'GET'])
+def handle_station():
     """
     Trae lista de estaciones (GET) y agrega una estación (POST)
     """
