@@ -43,6 +43,7 @@ class Station(db.Model):
     responsibleUser = db.Column(db.String(80), unique=False, nullable=False)
     description = db.Column(db.String(120), unique=True, nullable=True)
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+    assignedMeasure = db.relationship('AssignedMeasure')
 
     def __repr__(self):
         return '<Station %r>' % self.name
@@ -57,6 +58,18 @@ class Measure(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     unit = db.Column(db.String(10), unique=True, nullable=False)
 
+    def __repr__(self):
+        return '<Measure %r>' % self.name
+
+    def serialize(self):
+        return {
+            "name": self.name
+        }
+
+class AssignedMeasure(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    stations = db.Column(db.Integer, db.ForeignKey('station.id'),
+        nullable=False)
     def __repr__(self):
         return '<Measure %r>' % self.name
 
