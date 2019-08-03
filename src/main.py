@@ -121,8 +121,8 @@ def handle_station():
             raise APIException('You need to specify the longitude', status_code=400)
         if 'responsible' not in body:
             raise APIException('You need to specify the responsible', status_code=400)
-        if 'orzanization' not in body:
-            raise APIException('You need to specify the orzanization', status_code=400)
+        if 'organization' not in body:
+            raise APIException('You need to specify the organization', status_code=400)
 
 
         station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], responsible=body['responsible'], organization=body['organization'])
