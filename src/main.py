@@ -256,7 +256,7 @@ def get_single_measure(measure_id):
 
 
 @app.route('/assignedmeasures', methods=['POST'])
-def handle_assignmeasure():
+def handle_assignedmeasure():
     """
     Agrega una medicion a estación (POST)
     """
@@ -280,7 +280,7 @@ def handle_assignmeasure():
     return "Invalid Method", 404
 
 @app.route('/measures/<int:assignedmeasure_id>', methods=['DELETE'])
-def get_single_Assignedmeasure(assignedmeasure_id):
+def get_assignedmeasure(assignedmeasure_id):
     """
     Borra una medición asignada a estación (DELETE)
     """
@@ -295,6 +295,10 @@ def get_single_Assignedmeasure(assignedmeasure_id):
         return "ok", 200
 
     return "Invalid Method", 404
+
+
+
+
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
