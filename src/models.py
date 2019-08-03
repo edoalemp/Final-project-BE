@@ -68,8 +68,9 @@ class Measure(db.Model):
 
 class AssignedMeasure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    measures = db.Column(db.Integer, db.ForeignKey('measure.id'), nullable=False)
-    stations = db.Column(db.Integer, db.ForeignKey('station.id'), nullable=False)
+    measure = db.Column(db.Integer, db.ForeignKey('measure.id'), nullable=False)
+    station = db.Column(db.Integer, db.ForeignKey('station.id'), nullable=False)
+    data = db.relationship('Data')
 
     def __repr__(self):
         return '<AssignedMeasure %r>' % self.measures
@@ -78,3 +79,4 @@ class AssignedMeasure(db.Model):
         return {
             "measures": self.measures
         }
+
