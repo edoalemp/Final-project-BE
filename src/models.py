@@ -66,14 +66,14 @@ class Measure(db.Model):
             "name": self.name
         }
 
-class AssignedMeasure(db.Model):
+class Assignedmeasure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     measure = db.Column(db.Integer, db.ForeignKey('measure.id'), nullable=False)
     station = db.Column(db.Integer, db.ForeignKey('station.id'), nullable=False)
     data = db.relationship('Data')
 
     def __repr__(self):
-        return '<AssignedMeasure %r>' % self.measure
+        return '<Assignedmeasure %r>' % self.measure
 
     def serialize(self):
         return {
@@ -84,7 +84,7 @@ class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.String(80), unique=True, nullable=False)
     timestamp = db.Column(db.String(80), unique=True, nullable=False)
-
+    assignedmeasure = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
 
     def __repr__(self):
         return '<Data %r>' % self.value
