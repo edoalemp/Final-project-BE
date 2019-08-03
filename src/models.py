@@ -46,9 +46,9 @@ class Station(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     lattitude = db.Column(db.String(40), unique=True, nullable=False)
     longitude = db.Column(db.String(40), unique=True, nullable=False)
-    responsible = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=True)
-    organization = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     assignedMeasures = db.relationship('Assignedmeasure')
 
     def __repr__(self):
@@ -60,9 +60,9 @@ class Station(db.Model):
             "name": self.name,
             "lattitude": self.lattitude,
             "longitude": self.longitude,
-            "responsible": self.responsible,
+            "responsible": self.person_id,
             "description": self.description,
-            "organization": self.organization
+            "organization": self.organization_id
         }
 
 class Measure(db.Model):

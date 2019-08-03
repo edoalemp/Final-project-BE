@@ -121,12 +121,12 @@ def handle_station():
             raise APIException('You need to specify the lattitude', status_code=400)
         if 'longitude' not in body:
             raise APIException('You need to specify the longitude', status_code=400)
-        if 'responsible' not in body:
-            raise APIException('You need to specify the responsible', status_code=400)
-        if 'organization' not in body:
-            raise APIException('You need to specify the organization', status_code=400)
+        if 'person_id' not in body:
+            raise APIException('You need to specify the person_id', status_code=400)
+        if 'organization_id' not in body:
+            raise APIException('You need to specify the organization_id', status_code=400)
 
-        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], responsible=body['responsible'], organization=body['organization'])
+        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], person_id=body['person_id'], organization_id=body['organization_id'])
         db.session.add(station1)
         db.session.commit()
         return "ok", 200
@@ -161,12 +161,12 @@ def get_single_station(station_id):
             station1.lattitude = body["lattitude"]
         if "longitude" in body:
             station1.longitude = body["longitude"]
-        if "responsibleuser" in body:
-            station1.responsibleuser = body["responsibleuser"]
+        if "person_id" in body:
+            station1.person_id = body["person_id"]
         if "description" in body:
             station1.description = body["description"]
-        if "organization" in body:
-            station1.organization = body["organization"]
+        if "organization_id" in body:
+            station1.organization_id = body["organization_id"]
         db.session.commit()
 
         return jsonify(station1.serialize()), 200
