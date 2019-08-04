@@ -139,7 +139,7 @@ def handle_station():
 
     return "Invalid Method", 404
 
-@app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE'])
+@app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE', 'GET'])
 def get_single_station(station_id):
     """
     edita una estación (PUT) y borra una estacion (DELETE)
@@ -179,6 +179,15 @@ def get_single_station(station_id):
         db.session.delete(station1)
         db.session.commit()
         return "ok", 200
+
+    # GET request
+    if request.method == 'GET':
+        station1 = Station.query.get(station_id)
+        if station1 is None:
+            raise APIException('Station not found', status_code=404)
+        station1 = list(map(lambda x: x.serialize(), station1))
+        return jsonify(station1), 200
+
 
     return "Invalid Method", 404
 
