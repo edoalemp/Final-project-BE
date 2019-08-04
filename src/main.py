@@ -288,7 +288,7 @@ def handle_assignedmeasure():
 
     return "Invalid Method", 404
 
-@app.route('/measures/<int:assignedmeasure_id>', methods=['DELETE'])
+@app.route('/assignedmeasures/<int:assignedmeasure_id>', methods=['DELETE'])
 def get_assignedmeasure(assignedmeasure_id):
     """
     Borra una medición asignada a estación (DELETE)
