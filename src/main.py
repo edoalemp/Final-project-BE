@@ -64,6 +64,21 @@ def handle_organization():
     return "Invalid Method", 404
 
 
+@app.route('/organizations/<int:organization_id>/people', methods=['GET'])
+def handle_organization_people(organization_id):
+    """
+    Trae una lista de personas de una organización
+    """
+
+        # GET request
+    if request.method == 'GET':
+        organization_people = Person.query.filter(organization_id=organization_id)
+        organization_people = list(map(lambda x: x.serialize(), organization_people))
+        return jsonify(organization_people), 200
+
+    return "Invalid Method", 404
+
+
 ####   Personas   ####
 
 
@@ -188,16 +203,16 @@ def get_single_station(station_id):
         station1 = list(map(lambda x: x.serialize(), station1))
         return jsonify(station1), 200
 
-
     return "Invalid Method", 404
 
-####   Mediciones    ####
+
+####   Medidas    ####
 
 
 @app.route('/measures', methods=['POST', 'GET'])
 def handle_measure():
     """
-    Trae lista de mediciones (GET) y agrega una medicion (POST)
+    Trae lista de medida (GET) y agrega una medida (POST)
     """
 
     # POST request
@@ -227,7 +242,7 @@ def handle_measure():
 @app.route('/measures/<int:measure_id>', methods=['PUT', 'DELETE'])
 def get_single_measure(measure_id):
     """
-    edita una medición (PUT) y borra una medición (DELETE)
+    edita una medida (PUT) y borra una medida (DELETE)
     """
 
     # PUT request
@@ -265,9 +280,9 @@ def get_single_measure(measure_id):
 
 
 @app.route('/assignedmeasures', methods=['POST'])
-def handle_assignedmeasure():
+def handle_assigned_measure():
     """
-    Agrega una medicion a estación (POST)
+    asigna una medicion a estación (POST)
     """
 
     # POST request
@@ -289,7 +304,7 @@ def handle_assignedmeasure():
     return "Invalid Method", 404
 
 @app.route('/assignedmeasures/<int:assignedmeasure_id>', methods=['DELETE'])
-def get_assignedmeasure(assignedmeasure_id):
+def get_assigned_measures(assignedmeasure_id):
     """
     Borra una medición asignada a estación (DELETE)
     """
@@ -305,8 +320,33 @@ def get_assignedmeasure(assignedmeasure_id):
 
     return "Invalid Method", 404
 
+@app.route('/stations/<int:station_id>/assignedmeasures', methods=['GET'])
+def get_assigned_measure_from_station(station_id):
+    """
+    Trae medidas asignadas desde estación (GET)
+    """
 
+    # GET request
+    if request.method == 'GET':
+        measures = Assignedmeasure.query.filter(station_id=station_id)
+        if measures is None:
+            raise APIException('Measures not found', status_code=404)
+        measures = list(map(lambda x: x.serialize(), measures))
+        return jsonify(measures), 200
 
+@app.route('/measures/<int:measure_id>/assignedmeasures', methods=['GET'])
+def get_stations_with_measures(measure_id):
+    """
+    Trae estaciones con la medición asignada (GET)
+    """
+
+    # GET request
+    if request.method == 'GET':
+        stations = Assignedmeasure.query.filter(measure_id=measure_id)
+        if stations is None:
+            raise APIException('Stations not found', status_code=404)
+        stations = list(map(lambda x: x.serialize(), stations))
+        return jsonify(stations), 200
 
 
 if __name__ == '__main__':
