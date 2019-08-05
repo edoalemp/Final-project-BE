@@ -334,7 +334,7 @@ def get_assigned_measure_from_station(station_id):
         measures = list(map(lambda x: x.serialize(), measures))
         return jsonify(measures), 200
 
-@app.route('/measures/<int:measure_id>/assignedmeasures', methods=['GET'])
+@app.route('/measures/<int:measure_id>/stations', methods=['GET'])
 def get_stations_with_measures(measure_id):
     """
     Trae estaciones con la medición asignada (GET)
