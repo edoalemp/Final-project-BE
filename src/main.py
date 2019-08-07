@@ -336,7 +336,7 @@ def get_assigned_measure_from_station(station_id):
 
     # GET request
     if request.method == 'GET':
-        measures = Assignedmeasure.query.filter(station_id=station_id)
+        measures = Assignedmeasure.query.filter_by(station_id=station_id)
         if measures is None:
             raise APIException('Measures not found', status_code=404)
         measures = list(map(lambda x: x.serialize(), measures))
