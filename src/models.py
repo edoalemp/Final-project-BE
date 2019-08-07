@@ -71,8 +71,8 @@ class Station(db.Model):
 
 class Measure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    unit = db.Column(db.String(10), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    unit = db.Column(db.String(10), unique=False, nullable=False)
     assignedMeasures = db.relationship('Assignedmeasure')
 
     def __repr__(self):
@@ -80,6 +80,7 @@ class Measure(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "name": self.name,
             "unit": self.unit
         }

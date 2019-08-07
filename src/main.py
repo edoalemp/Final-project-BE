@@ -161,7 +161,7 @@ def handle_station():
 @app.route('/stations/<int:station_id>', methods=['PUT', 'DELETE', 'GET'])
 def get_single_station(station_id):
     """
-    edita una estación (PUT) y borra una estacion (DELETE)
+    edita una estación (PUT), borra una estacion (DELETE) y trae una estación (GET)
     """
 
     # PUT request
@@ -186,6 +186,11 @@ def get_single_station(station_id):
             station1.description = body["description"]
         if "organization_id" in body:
             station1.organization_id = body["organization_id"]
+        if "streetaddress" in body:
+            station1.streetaddress = body["streetaddress"]
+        if "numberaddress" in body:
+            station1.numberaddress = body["numberaddress"]
+
         db.session.commit()
 
         return jsonify(station1.serialize()), 200
