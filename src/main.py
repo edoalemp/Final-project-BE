@@ -140,8 +140,12 @@ def handle_station():
             raise APIException('You need to specify the person_id', status_code=400)
         if 'organization_id' not in body:
             raise APIException('You need to specify the organization_id', status_code=400)
+        if 'streetaddress' not in body:
+            raise APIException('You need to specify the street address', status_code=400)
+        if 'numberaddress' not in body:
+            raise APIException('You need to specify the number address', status_code=400)
 
-        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], person_id=body['person_id'], organization_id=body['organization_id'])
+        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], person_id=body['person_id'], organization_id=body['organization_id'], streetaddress=body['streetaddress'], numberaddress=body['numberaddress'])
         db.session.add(station1)
         db.session.commit()
         return "ok", 200
@@ -200,8 +204,7 @@ def get_single_station(station_id):
         station1 = Station.query.get(station_id)
         if station1 is None:
             raise APIException('Station not found', status_code=404)
-        station1 = list(map(lambda x: x.serialize(), station1))
-        return jsonify(station1), 200
+        return station1.serialize(), 200
 
     return "Invalid Method", 404
 

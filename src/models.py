@@ -62,6 +62,8 @@ class Station(db.Model):
             "name": self.name,
             "lattitude": self.lattitude,
             "longitude": self.longitude,
+            "streetaddress": self.streetaddress,
+            "numberaddress": self.numberaddress,
             "responsible": self.person_id,
             "description": self.description,
             "organization": self.organization_id
