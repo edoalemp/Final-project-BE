@@ -32,7 +32,7 @@ def sitemap():
 @app.route('/organizations', methods=['POST', 'GET'])
 def handle_organization():
     """
-    agrega una organizacion (POST), trae lista de organizaciones
+    agrega una organizacion (POST), trae lista de organizaciones (GET)
     """
 
     # POST request
