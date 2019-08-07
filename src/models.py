@@ -46,6 +46,8 @@ class Station(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     lattitude = db.Column(db.String(40), unique=True, nullable=False)
     longitude = db.Column(db.String(40), unique=True, nullable=False)
+    streetaddress = db.Column(db.String(80), unique=True, nullable=False)
+    numberaddress = db.Column(db.String(10), unique=True, nullable=False)
     person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=True)
     organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
