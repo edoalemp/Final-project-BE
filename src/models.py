@@ -96,6 +96,7 @@ class Assignedmeasure(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "measure_id": self.measure_id,
             "station_id": self.station_id
         }
