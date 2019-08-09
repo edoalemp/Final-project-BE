@@ -328,7 +328,7 @@ def get_assigned_measures(assignedmeasure_id):
 
     return "Invalid Method", 404
 
-@app.route('/stations/<int:station_id>/assignedmeasures', methods=['GET'])
+@app.route('/stations/<int:station_id>/measures', methods=['GET'])
 def get_assigned_measure_from_station(station_id):
     """
     Trae medidas asignadas desde estación (GET)
@@ -350,7 +350,7 @@ def get_stations_with_measures(measure_id):
 
     # GET request
     if request.method == 'GET':
-        stations = Assignedmeasure.query.filter(measure_id=measure_id)
+        stations = Assignedmeasure.query.filter_by(measure_id=measure_id)
         if stations is None:
             raise APIException('Stations not found', status_code=404)
         stations = list(map(lambda x: x.serialize(), stations))
