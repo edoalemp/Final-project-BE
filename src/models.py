@@ -72,7 +72,8 @@ class Station(db.Model):
 class Measure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    unit = db.Column(db.String(10), unique=False, nullable=False)
+    unit = db.Column(db.String(20), unique=True, nullable=False)
+    symbol = db.Column(db.String(10), unique=True, nullable=False)
     assignedMeasures = db.relationship('Assignedmeasure')
 
     def __repr__(self):
