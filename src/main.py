@@ -247,7 +247,7 @@ def handle_measure():
 
     return "Invalid Method", 404
 
-@app.route('/measures/<int:measure_id>', methods=['PUT', 'DELETE'])
+@app.route('/measures/<int:measure_id>', methods=['PUT', 'DELETE', 'GET'])
 def get_single_measure(measure_id):
     """
     edita una medida (PUT) y borra una medida (DELETE)
@@ -280,6 +280,14 @@ def get_single_measure(measure_id):
         db.session.delete(measure1)
         db.session.commit()
         return "ok", 200
+
+    # GET request
+    if request.method == 'GET':
+        measure1 = Measure.query.get(measure_id)
+        if measure1 is None:
+            raise APIException('Measure not found', status_code=404)
+        return measure1.serialize(), 200
+
 
     return "Invalid Method", 404
 
