@@ -83,7 +83,8 @@ class Measure(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "unit": self.unit
+            "unit": self.unit,
+            "symbol": self.symbol
         }
 
 class Assignedmeasure(db.Model):

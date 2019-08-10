@@ -233,8 +233,10 @@ def handle_measure():
             raise APIException('You need to specify the name', status_code=400)
         if 'unit' not in body:
             raise APIException('You need to specify the unit', status_code=400)
+        if 'symbol' not in body:
+            raise APIException('You need to specify the symbol', status_code=400)
 
-        measure1 = Measure(name=body['name'], unit=body['unit'])
+        measure1 = Measure(name=body['name'], unit=body['unit'], symbol=body['symbol'])
         db.session.add(measure1)
         db.session.commit()
         return "ok", 200
@@ -267,6 +269,8 @@ def get_single_measure(measure_id):
             measure1.name = body["name"]
         if "unit" in body:
             measure1.unit = body["unit"]
+        if "symbol" in body:
+            measure1.unit = body["symbol"]
 
         db.session.commit()
 
