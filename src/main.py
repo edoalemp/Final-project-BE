@@ -270,7 +270,7 @@ def get_single_measure(measure_id):
         if "unit" in body:
             measure1.unit = body["unit"]
         if "symbol" in body:
-            measure1.unit = body["symbol"]
+            measure1.symbol = body["symbol"]
 
         db.session.commit()
 
