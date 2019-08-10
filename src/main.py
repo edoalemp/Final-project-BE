@@ -145,7 +145,7 @@ def handle_station():
         if 'numberaddress' not in body:
             raise APIException('You need to specify the number address', status_code=400)
 
-        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], person_id=body['person_id'], organization_id=body['organization_id'], streetaddress=body['streetaddress'], numberaddress=body['numberaddress'])
+        station1 = Station(name=body['name'], lattitude=body['lattitude'], longitude=body['longitude'], person_id=body['person_id'], description=body['description'], organization_id=body['organization_id'], streetaddress=body['streetaddress'], numberaddress=body['numberaddress'])
         db.session.add(station1)
         db.session.commit()
         return "ok", 200
@@ -252,7 +252,7 @@ def handle_measure():
 @app.route('/measures/<int:measure_id>', methods=['PUT', 'DELETE', 'GET'])
 def get_single_measure(measure_id):
     """
-    edita una medida (PUT) y borra una medida (DELETE)
+    edita una medida (PUT), borra una medida (DELETE) y trae una medida
     """
 
     # PUT request
