@@ -299,8 +299,8 @@ def get_single_measure(measure_id):
 ####   Mediciones Asignadas a estación   ####
 
 
-@app.route('/assignedmeasures', methods=['POST'])
-def handle_assigned_measure():
+@app.route('/assignedmeasures', methods=['POST', 'GET'])
+def handle_assigned_measures():
     """
     asigna una medicion a estación (POST)
     """
@@ -320,6 +320,12 @@ def handle_assigned_measure():
         db.session.add(assignedmeasure1)
         db.session.commit()
         return "ok", 200
+
+    # GET request
+    if request.method == 'GET':
+        all_assignedmeasures = Assignedmeasure.query.all()
+        all_assignedmeasures = list(map(lambda x: x.serialize(), all_assignedmeasures))
+        return jsonify(all_assignedmeasures), 200
 
     return "Invalid Method", 404
 
