@@ -105,8 +105,7 @@ class Assignedmeasure(db.Model):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String(15), unique=True, nullable=False)
-    timestamp = db.Column(db.String(25), unique=True, nullable=False)
+    data = db.Column(db.String(15), unique=True, nullable=False)
     assignedmeasure = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
 
     def __repr__(self):
