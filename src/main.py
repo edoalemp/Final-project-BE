@@ -329,6 +329,25 @@ def handle_assigned_measures():
 
     return "Invalid Method", 404
 
+
+
+@app.route('/assignedmeasures/<int:station_id>/<int:measure_id>', methods=['GET'])
+def handle_data_measure(station_id, measure_id):
+    """
+    Trae los datos de una medición (GET)
+    """
+
+    # GET request
+    if request.method == 'GET':
+        datameasure = Assignedmeasure.query.filter(Assignedmeasure.station_id == station_id, Assignedmeasure.measure_id == measure_id).first()
+        if datameasure is None:
+            raise APIException('Assigned measure not found', status_code=404)
+        return datameasure.serialize(), 200
+
+    return "Invalid Method", 404
+
+
+
 @app.route('/assignedmeasures/<int:assignedmeasure_id>', methods=['DELETE'])
 def get_assigned_measures(assignedmeasure_id):
     """
