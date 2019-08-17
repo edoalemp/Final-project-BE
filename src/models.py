@@ -106,14 +106,15 @@ class Assignedmeasure(db.Model):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.String(15), unique=True, nullable=False)
-    assignedmeasure = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
+    data_value = db.Column(db.Float, unique=False, nullable=False)
+    data_time_measure = db.Column(db.DateTime, unique=False, nullable=False)
+    assignedmeasure_id = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
 
     def __repr__(self):
         return '<Data %r>' % self.value
 
     def serialize(self):
         return {
-            "value": self.value,
-            "timestamp": self.timestamp
+            "data_value": self.data_value,
+            "data_time_measure": self.data_time_measure
         }

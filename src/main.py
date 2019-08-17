@@ -394,6 +394,56 @@ def get_stations_with_measures(measure_id):
         return jsonify(stations), 200
 
 
+
+@app.route('/stations/fill', methods=['POST'])
+def fill_stations():
+    """
+    Llena con estaciones (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        for i in range(3):
+            station1 = Station(name="Estación"+str(i+1), lattitude=str(i+1), longitude=str(i+2), person_id=1, description="", organization_id=1, streetaddress=str(i+1), numberaddress=str(i+1))
+            db.session.add(station1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
+@app.route('/measures/fill', methods=['POST'])
+def fill_measures():
+    """
+    Llena con medidas (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        for i in range(3):
+            measures1 = Measure(name="medida"+str(i+1), unit="unidad"+str(i+1), symbol="símbolo"+str(i+1))
+            db.session.add(measures1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
+@app.route('/assignedmeasures/fill', methods=['POST'])
+def fill_assignedmeasures():
+    """
+    Llena con mediciones (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+        for i in range(3):
+            for j in range(3):
+                assignedmeasure1 = Assignedmeasure(measure_id=i+1, station_id=j+3)
+                db.session.add(assignedmeasure1)
+        db.session.commit()
+        return "ok", 200
+
+    return "Invalid Method", 404
+
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT)
