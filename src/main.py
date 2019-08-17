@@ -342,7 +342,12 @@ def handle_data_measure(station_id, measure_id):
         datameasure = Assignedmeasure.query.filter(Assignedmeasure.station_id == station_id, Assignedmeasure.measure_id == measure_id).first()
         if datameasure is None:
             raise APIException('Assigned measure not found', status_code=404)
-        return datameasure.serialize(), 200
+        # return datameasure.data, 200
+
+        datameasure = list(map(lambda x: x.serialize(), datameasure.data))
+        return jsonify(datameasure), 200
+
+
 
     return "Invalid Method", 404
 
