@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-import os
+import os, random, math
 from flask import Flask, request, jsonify, url_for
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -443,6 +443,312 @@ def fill_assignedmeasures():
         return "ok", 200
 
     return "Invalid Method", 404
+
+@app.route('/data/fill', methods=['POST'])
+def fill_data():
+    """
+    Llena con mediciones (POST)
+    """
+
+    # POST request
+    if request.method == 'POST':
+
+        month=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=random.randint(-5,45)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=100*math.sin(x)
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=100*math.sin(x)-(random.randint(-5,45))/2
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    db.session.add(data1)
+        db.session.commit()
+
+        month=0
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=random.randint(-10,100)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=75*math.cos(x)
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=25*math.sin(x)+25*(random.randint(-5,45))
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    db.session.add(data1)
+        db.session.commit()
+
+
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=75+0.25*random.randint(-10,100)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=75*math.cos(x)
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    db.session.add(data1)
+        db.session.commit()
+
+        x=0
+        for month in range (1,13):
+            if month == 1 or month ==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                lastday=32
+            elif month ==4 or month==6 or month==9 or month==11:
+                lastday=31
+            else:
+                lastday=29
+            for day in range (1,lastday):
+                for hour in range(0,24):
+                    if month<10:
+                        strmonth="0"+str(month)
+                    else:
+                        strmonth=str(month)
+
+                    if day<10:
+                        strday="0"+str(day)
+                    else:
+                        strday=str(day)
+
+                    if hour<10:
+                        strhour="0"+str(hour)
+                    else:
+                        strhour=str(hour)
+
+                    date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
+                    value=25*math.sin(x)+25*math.cos(x)
+                    x=x+1
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    db.session.add(data1)
+        db.session.commit()
+
+
+        return "ok", 200
+
+    return "Invalid Method", 404
+
+
+
+
+
+
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
