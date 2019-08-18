@@ -442,7 +442,7 @@ def fill_assignedmeasures():
     if request.method == 'POST':
         for i in range(3):
             for j in range(3):
-                assignedmeasure1 = Assignedmeasure(measure_id=i+1, station_id=j+3)
+                assignedmeasure1 = Assignedmeasure(measure_id=i+1, station_id=j+1)
                 db.session.add(assignedmeasure1)
         db.session.commit()
         return "ok", 200
@@ -485,7 +485,7 @@ def fill_data():
 
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=random.randint(-5,45)
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=7)
                     db.session.add(data1)
         db.session.commit()
 
@@ -517,7 +517,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=100*math.sin(x)
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=8)
                     db.session.add(data1)
         db.session.commit()
 
@@ -549,7 +549,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=100*math.sin(x)-(random.randint(-5,45))/2
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=9)
                     db.session.add(data1)
         db.session.commit()
 
@@ -581,7 +581,7 @@ def fill_data():
 
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=random.randint(-10,100)
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=10)
                     db.session.add(data1)
         db.session.commit()
 
@@ -613,7 +613,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=75*math.cos(x)
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=11)
                     db.session.add(data1)
         db.session.commit()
 
@@ -645,7 +645,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=25*math.sin(x)+25*(random.randint(-5,45))
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=12)
                     db.session.add(data1)
         db.session.commit()
 
@@ -676,7 +676,7 @@ def fill_data():
 
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=75+0.25*random.randint(-10,100)
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=1)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=13)
                     db.session.add(data1)
         db.session.commit()
 
@@ -708,7 +708,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=75*math.cos(x)
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=2)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=14)
                     db.session.add(data1)
         db.session.commit()
 
@@ -740,7 +740,7 @@ def fill_data():
                     date="2018"+"-"+strmonth+"-"+strday+" "+strhour+":00:00"
                     value=25*math.sin(x)+25*math.cos(x)
                     x=x+1
-                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=3)
+                    data1=Data(data_value=value, data_time_measure=date, assignedmeasure_id=15)
                     db.session.add(data1)
         db.session.commit()
 
