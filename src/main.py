@@ -340,6 +340,7 @@ def handle_data_measure(station_id, measure_id, date_from, date_to):
 
     # GET request
     if request.method == 'GET':
+
         s=date_from
         e=date_to
         datefrom = datetime.datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), int(s[8:10]), int(s[10:12]), int(s[12:14]))
@@ -372,16 +373,10 @@ def get_assigned_measures(assignedmeasure_id):
 
         values = Data.query.filter(Data.assignedmeasure_id == assignedmeasure_id).first()
 
-        #assignedmeasure1 = Assignedmeasure.query.get(assignedmeasure_id)
-        #print(assignedmeasure1.id)
-        print("zzz")
-        #values = Data.query.filter(Data.assignedmeasure_id == assignedmeasure_id )
-
         if values is None:
             raise APIException('Measure not found', status_code=404)
 
         db.session.delete(values)
-        #db.session.delete(assignedmeasure1)
         db.session.commit()
 
         assignedmeasure1 = Assignedmeasure.query.get(assignedmeasure_id)
