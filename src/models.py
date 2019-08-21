@@ -108,7 +108,7 @@ class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data_value = db.Column(db.Float, unique=False, nullable=False)
     data_time_measure = db.Column(db.DateTime, unique=False, nullable=False)
-    assignedmeasure_id = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=False)
+    assignedmeasure_id = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=True)
 
     def __repr__(self):
         return '<Data %r>' % self.value
