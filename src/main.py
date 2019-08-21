@@ -345,16 +345,18 @@ def handle_data_measure(station_id, measure_id, date_from, date_to):
         datefrom = datetime.datetime(2018, 10, 14, 12, 15, 5)
         dateto = datetime.datetime(2018, 12, 25, 23, 0, 0)
 
+        datameasure = Assignedmeasure.query.filter(station_id==station_id, measure_id==measure_id).first()
 
-        #datameasure = Assignedmeasure.query.filter(station_id==station_id, measure_id==measure_id).first()
-        datameasure = db.session.query(Data).join(Assignedmeasure).filter(Data.data_time_measure>=datefrom)
+        #datameasure = db.session.query(Data).join(Assignedmeasure).filter(station_id==station_id, measure_id==measure_id, Data.data_time_measure>=datefrom)
 
-        if datameasure is None:
-            raise APIException('Assigned measure not found', status_code=404)
+        values = Data.query.filter(Data.data_time_measure >= datefrom).filter(Data.data_time_measure <= dateto).filter(Data.assignedmeasure_id == datameasure.id )
+
+        #if datameasure is None:
+        #    raise APIException('Assigned measure not found', status_code=404)
 
 
-        datameasure = list(map(lambda x: x.serialize(), datameasure))
-        return jsonify(datameasure), 200
+        parsed_values = list(map(lambda x: x.serialize(), values))
+        return jsonify(parsed_values), 200
 
 
 
