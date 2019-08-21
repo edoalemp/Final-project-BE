@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import datetime
 import os, random, math
 from flask import Flask, request, jsonify, url_for
 from flask_migrate import Migrate
@@ -331,20 +332,28 @@ def handle_assigned_measures():
 
 
 
-@app.route('/assignedmeasures/<int:station_id>/<int:measure_id>', methods=['GET'])
-def handle_data_measure(station_id, measure_id):
+@app.route('/assignedmeasures/<int:station_id>/<int:measure_id>/<string:date_from>/<string:date_to>', methods=['GET'])
+def handle_data_measure(station_id, measure_id, date_from, date_to):
     """
     Trae los datos de una medición (GET)
     """
 
+
     # GET request
     if request.method == 'GET':
-        datameasure = Assignedmeasure.query.filter(Assignedmeasure.station_id == station_id, Assignedmeasure.measure_id == measure_id).first()
+
+        datefrom = datetime.datetime(2018, 10, 14, 12, 15, 5)
+        dateto = datetime.datetime(2018, 12, 25, 23, 0, 0)
+
+
+        #datameasure = Assignedmeasure.query.filter(station_id==station_id, measure_id==measure_id).first()
+        datameasure = db.session.query(Data).join(Assignedmeasure).filter(Data.data_time_measure>=datefrom)
+
         if datameasure is None:
             raise APIException('Assigned measure not found', status_code=404)
-        # return datameasure.data, 200
 
-        datameasure = list(map(lambda x: x.serialize(), datameasure.data))
+
+        datameasure = list(map(lambda x: x.serialize(), datameasure))
         return jsonify(datameasure), 200
 
 
