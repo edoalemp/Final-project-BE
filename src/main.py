@@ -9,6 +9,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from models import db, Person, Organization, Measure, Assignedmeasure, Data, Station
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -361,8 +362,8 @@ def handle_data_measure(station_id, measure_id, date_from, date_to):
     return "Invalid Method", 404
 
 
-@app.route('/assignedmeasures/<int:station_id>/<int:measure_id>', methods=['GET'])
-def handle_last_data_measure(station_id, measure_id):
+@app.route('/assignedmeasures/last', methods=['GET'])
+def handle_last_data_measure():
     """
     Trae los datos de una medición (GET)
     """
@@ -370,22 +371,38 @@ def handle_last_data_measure(station_id, measure_id):
     # GET request
     if request.method == 'GET':
 
-        s=date_from
-        e=date_to
-        datefrom = datetime.datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), int(s[8:10]), int(s[10:12]), int(s[12:14]))
-        dateto= datetime.datetime(int(e[0:4]), int(e[4:6]), int(e[6:8]), int(e[8:10]), int(e[10:12]), int(e[12:14]))
+        all_assignedmeasures = Assignedmeasure.query.all()
+        all_assignedmeasures = list(map(lambda x: x.serialize(), all_assignedmeasures))
+        size=len(all_assignedmeasures)
+        lastdata=[]
+        items=[]
+        for i in range(0,size):
+            item={
+                "data_time_measure":"",
+                "data_value":"",
+                "measure_id":"",
+                "station_id":""
+            }
+            data=Data.query.filter(Data.assignedmeasure_id==all_assignedmeasures[i]["id"]).order_by(Data.data_time_measure.desc()).first()
+            x=data.serialize()
+            item["data_time_measure"]=x["data_time_measure"]
+            item["data_value"]=x["data_value"]
+            item["measure_id"]=all_assignedmeasures[i]["measure_id"]
+            item["station_id"]=all_assignedmeasures[i]["station_id"]
+            #setattr(item, "data_time_measure", data["data_time_measure"])
+            #setattr(item, "data_value", data["data_value"])
+            #setattr(item, "measure_id", all_assignedmeasures[i]["measure_id"])
+            #setattr(item, "station_id", all_assignedmeasures[i]["station_id"])
+            lastdata.append(item)
 
-        #Obtengo data con la id requerida
-        datameasure = Assignedmeasure.query.filter(Assignedmeasure.station_id==station_id).filter(Assignedmeasure.measure_id==measure_id).first()
+        print(lastdata)
 
-        #Obtengo la data necesaria filtrando por fechas y por la id que obtengo en el filtrado anterior
-        values = Data.query.filter(Data.assignedmeasure_id == datameasure.id ).first()
 
-        if values is None:
+        if lastdata is None:
             raise APIException('Values not found', status_code=404)
 
-        parsed_values = list(map(lambda x: x.serialize(), values))
-        return jsonify(parsed_values), 200
+        #lastdata = list(map(lambda x: x.serialize(), lastdata))
+        return jsonify(lastdata), 200
 
     return "Invalid Method", 404
 

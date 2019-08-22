@@ -94,7 +94,7 @@ class Assignedmeasure(db.Model):
     data = db.relationship('Data')
 
     def __repr__(self):
-        return '<Assignedmeasure %r>' % self.measure
+        return '<Assignedmeasure %r>' % self.measure_id
 
     def serialize(self):
         return {
@@ -111,10 +111,11 @@ class Data(db.Model):
     assignedmeasure_id = db.Column(db.Integer, db.ForeignKey('assignedmeasure.id'), nullable=True)
 
     def __repr__(self):
-        return '<Data %r>' % self.value
+        return '<Data %r>' % self.data_value
 
     def serialize(self):
         return {
+            "id":self.id,
             "data_value": self.data_value,
             "data_time_measure": self.data_time_measure
         }
