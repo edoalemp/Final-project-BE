@@ -365,7 +365,7 @@ def handle_data_measure(station_id, measure_id, date_from, date_to):
 @app.route('/assignedmeasures/last', methods=['GET'])
 def handle_last_data_measure():
     """
-    Trae los datos de una medición (GET)
+    Trae los datos de ultimas mediciones (GET)
     """
 
     # GET request
@@ -378,6 +378,7 @@ def handle_last_data_measure():
         items=[]
         for i in range(0,size):
             item={
+
                 "data_time_measure":"",
                 "data_value":"",
                 "measure_id":"",
@@ -385,18 +386,13 @@ def handle_last_data_measure():
             }
             data=Data.query.filter(Data.assignedmeasure_id==all_assignedmeasures[i]["id"]).order_by(Data.data_time_measure.desc()).first()
             x=data.serialize()
+
             item["data_time_measure"]=x["data_time_measure"]
             item["data_value"]=x["data_value"]
             item["measure_id"]=all_assignedmeasures[i]["measure_id"]
             item["station_id"]=all_assignedmeasures[i]["station_id"]
-            #setattr(item, "data_time_measure", data["data_time_measure"])
-            #setattr(item, "data_value", data["data_value"])
-            #setattr(item, "measure_id", all_assignedmeasures[i]["measure_id"])
-            #setattr(item, "station_id", all_assignedmeasures[i]["station_id"])
+
             lastdata.append(item)
-
-        print(lastdata)
-
 
         if lastdata is None:
             raise APIException('Values not found', status_code=404)
@@ -405,10 +401,6 @@ def handle_last_data_measure():
         return jsonify(lastdata), 200
 
     return "Invalid Method", 404
-
-
-
-
 
 @app.route('/assignedmeasures/<int:assignedmeasure_id>', methods=['DELETE'])
 def get_assigned_measures(assignedmeasure_id):
