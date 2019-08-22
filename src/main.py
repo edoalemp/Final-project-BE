@@ -361,6 +361,37 @@ def handle_data_measure(station_id, measure_id, date_from, date_to):
     return "Invalid Method", 404
 
 
+@app.route('/assignedmeasures/<int:station_id>/<int:measure_id>', methods=['GET'])
+def handle_last_data_measure(station_id, measure_id):
+    """
+    Trae los datos de una medición (GET)
+    """
+
+    # GET request
+    if request.method == 'GET':
+
+        s=date_from
+        e=date_to
+        datefrom = datetime.datetime(int(s[0:4]), int(s[4:6]), int(s[6:8]), int(s[8:10]), int(s[10:12]), int(s[12:14]))
+        dateto= datetime.datetime(int(e[0:4]), int(e[4:6]), int(e[6:8]), int(e[8:10]), int(e[10:12]), int(e[12:14]))
+
+        #Obtengo data con la id requerida
+        datameasure = Assignedmeasure.query.filter(Assignedmeasure.station_id==station_id).filter(Assignedmeasure.measure_id==measure_id).first()
+
+        #Obtengo la data necesaria filtrando por fechas y por la id que obtengo en el filtrado anterior
+        values = Data.query.filter(Data.assignedmeasure_id == datameasure.id ).first()
+
+        if values is None:
+            raise APIException('Values not found', status_code=404)
+
+        parsed_values = list(map(lambda x: x.serialize(), values))
+        return jsonify(parsed_values), 200
+
+    return "Invalid Method", 404
+
+
+
+
 
 @app.route('/assignedmeasures/<int:assignedmeasure_id>', methods=['DELETE'])
 def get_assigned_measures(assignedmeasure_id):
