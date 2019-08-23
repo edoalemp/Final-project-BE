@@ -387,6 +387,7 @@ def handle_last_data_measure():
             data=Data.query.filter(Data.assignedmeasure_id==all_assignedmeasures[i]["id"]).order_by(Data.data_time_measure.desc()).first()
             x=data.serialize()
 
+            item["id"]=all_assignedmeasures[i]["id"]
             item["data_time_measure"]=x["data_time_measure"]
             item["data_value"]=x["data_value"]
             item["measure_id"]=all_assignedmeasures[i]["measure_id"]
